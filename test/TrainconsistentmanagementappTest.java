@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TrainconsistentmanagementappTest {
+public class TrainConsistManagementAppTest {
 
     // Helper method
     private Map<String, List<Bogie>> group(List<Bogie> list) {

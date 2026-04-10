@@ -1,56 +1,42 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.Arrays;
+import java.util.Scanner;
 
-public class TrainConsistManagementAppTest {
+public class TrainConsistManagementApp {
 
-    @Test
-    void testSort_BasicAlphabeticalSorting() {
-        String[] input = {"Sleeper","AC Chair","First Class","General","Luxury"};
-        String[] expected = {"AC Chair","First Class","General","Luxury","Sleeper"};
-
-        String[] result = TrainConsistManagementApp.sortBogieNames(input);
-
-        assertArrayEquals(expected, result);
+    // Linear Search Method
+    public static boolean searchBogieById(String[] bogieIds, String key) {
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(key)) { // equality check using equals()
+                return true; // early termination
+            }
+        }
+        return false; // not found
     }
 
-    @Test
-    void testSort_UnsortedInput() {
-        String[] input = {"Luxury","General","Sleeper","AC Chair"};
-        String[] expected = {"AC Chair","General","Luxury","Sleeper"};
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        String[] result = TrainConsistManagementApp.sortBogieNames(input);
+        System.out.println("Enter number of bogies:");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-        assertArrayEquals(expected, result);
-    }
+        String[] bogieIds = new String[n];
 
-    @Test
-    void testSort_AlreadySortedArray() {
-        String[] input = {"AC Chair","First Class","General"};
-        String[] expected = {"AC Chair","First Class","General"};
+        System.out.println("Enter bogie IDs:");
+        for (int i = 0; i < n; i++) {
+            bogieIds[i] = scanner.nextLine();
+        }
 
-        String[] result = TrainConsistManagementApp.sortBogieNames(input);
+        System.out.println("Enter bogie ID to search:");
+        String key = scanner.nextLine();
 
-        assertArrayEquals(expected, result);
-    }
+        boolean found = searchBogieById(bogieIds, key);
 
-    @Test
-    void testSort_DuplicateBogieNames() {
-        String[] input = {"Sleeper","AC Chair","Sleeper","General"};
-        String[] expected = {"AC Chair","General","Sleeper","Sleeper"};
+        if (found) {
+            System.out.println("Bogie ID found in the consist.");
+        } else {
+            System.out.println("Bogie ID not found.");
+        }
 
-        String[] result = TrainConsistManagementApp.sortBogieNames(input);
-
-        assertArrayEquals(expected, result);
-    }
-
-    @Test
-    void testSort_SingleElementArray() {
-        String[] input = {"Sleeper"};
-        String[] expected = {"Sleeper"};
-
-        String[] result = TrainConsistManagementApp.sortBogieNames(input);
-
-        assertArrayEquals(expected, result);
+        scanner.close();
     }
 }

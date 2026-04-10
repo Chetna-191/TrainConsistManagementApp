@@ -1,65 +1,50 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+public class TrainConsistManagementApp {
 
-class TrainConsistManagementAppTest {
+    // ✅ Bubble Sort Method
+    static void bubbleSort(int[] arr) {
 
-    @Test
-    void testCargo_SafeAssignment() {
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie("Cylindrical");
+        int n = arr.length;
 
-        bogie.assignCargo("Petroleum");
+        // Outer loop → number of passes
+        for (int i = 0; i < n - 1; i++) {
 
-        assertEquals("Petroleum", bogie.cargo);
+            // Inner loop → compare adjacent elements
+            for (int j = 0; j < n - i - 1; j++) {
+
+                // Swap if left > right
+                if (arr[j] > arr[j + 1]) {
+
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
     }
 
-    @Test
-    void testCargo_UnsafeAssignmentHandled() {
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie("Rectangular");
-
-        bogie.assignCargo("Petroleum");
-
-        // Should NOT assign cargo
-        assertNull(bogie.cargo);
+    // ✅ Utility to print array
+    static void printArray(int[] arr) {
+        for (int val : arr) {
+            System.out.print(val + " ");
+        }
+        System.out.println();
     }
 
-    @Test
-    void testCargo_CargoNotAssignedAfterFailure() {
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie("Rectangular");
+    // ✅ Main method (demo)
+    public static void main(String[] args) {
 
-        bogie.assignCargo("Petroleum");
+        System.out.println("======================================");
+        System.out.println("UC16 - Bubble Sort (Passenger Capacity)");
+        System.out.println("======================================");
 
-        assertNull(bogie.cargo);
-    }
+        int[] capacities = {72, 56, 24, 70, 60};
 
-    @Test
-    void testCargo_ProgramContinuesAfterException() {
+        System.out.print("Before Sorting: ");
+        printArray(capacities);
 
-        TrainConsistManagementApp.GoodsBogie b1 =
-                new TrainConsistManagementApp.GoodsBogie("Rectangular");
+        bubbleSort(capacities);
 
-        TrainConsistManagementApp.GoodsBogie b2 =
-                new TrainConsistManagementApp.GoodsBogie("Cylindrical");
-
-        // First fails
-        b1.assignCargo("Petroleum");
-
-        // Second should still execute
-        b2.assignCargo("Petroleum");
-
-        assertEquals("Petroleum", b2.cargo);
-    }
-
-    @Test
-    void testCargo_FinallyBlockExecution() {
-
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie("Rectangular");
-
-        // We can't directly assert print statements,
-        // but we ensure method completes without crash
-        assertDoesNotThrow(() -> bogie.assignCargo("Petroleum"));
+        System.out.print("After Sorting: ");
+        printArray(capacities);
     }
 }

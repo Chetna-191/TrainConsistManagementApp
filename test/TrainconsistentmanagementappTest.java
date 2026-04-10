@@ -1,35 +1,50 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TrainConsistManagementApp {
+public class TrainConsistManagementAppTest {
 
-    // Method to sort bogie names
-    public static String[] sortBogieNames(String[] bogies) {
-        Arrays.sort(bogies); // Built-in optimized sort
-        return bogies;
+    @Test
+    void testSearch_BogieFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+
+        boolean result = TrainConsistManagementApp.searchBogieById(bogies, "BG309");
+
+        assertTrue(result);
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    @Test
+    void testSearch_BogieNotFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
 
-        System.out.println("Enter number of bogies:");
-        int n = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        boolean result = TrainConsistManagementApp.searchBogieById(bogies, "BG999");
 
-        String[] bogies = new String[n];
+        assertFalse(result);
+    }
 
-        System.out.println("Enter bogie names:");
-        for (int i = 0; i < n; i++) {
-            bogies[i] = scanner.nextLine();
-        }
+    @Test
+    void testSearch_FirstElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
 
-        // Sort bogies
-        sortBogieNames(bogies);
+        boolean result = TrainConsistManagementApp.searchBogieById(bogies, "BG101");
 
-        // Display sorted result
-        System.out.println("Sorted Bogie Names:");
-        System.out.println(Arrays.toString(bogies));
+        assertTrue(result);
+    }
 
-        scanner.close();
+    @Test
+    void testSearch_LastElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+
+        boolean result = TrainConsistManagementApp.searchBogieById(bogies, "BG550");
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testSearch_SingleElementArray() {
+        String[] bogies = {"BG101"};
+
+        boolean result = TrainConsistManagementApp.searchBogieById(bogies, "BG101");
+
+        assertTrue(result);
     }
 }

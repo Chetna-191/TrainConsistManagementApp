@@ -1,70 +1,60 @@
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class TrainConsistManagementApp {
 
-    // ✅ Bogie Model
-    public static class Bogie {
-        private String name;
-        private int capacity;
-
-        public Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getCapacity() {
-            return capacity;
-        }
-
-        @Override
-        public String toString() {
-            return name + " (Capacity: " + capacity + ")";
+    // ✅ Custom Runtime Exception
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
+            super(message);
         }
     }
 
-    // ✅ Reuse: Create bogie list
-    public static List<Bogie> createBogies() {
-        return Arrays.asList(
-                new Bogie("B1", 50),
-                new Bogie("B2", 60),
-                new Bogie("B3", 70),
-                new Bogie("B4", 80)
-        );
+    // ✅ Goods Bogie Model
+    static class GoodsBogie {
+        String shape;
+        String cargo;
+
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        // ✅ Assign cargo with validation
+        void assignCargo(String cargo) {
+
+            try {
+                // ❌ Rule: Rectangular bogie cannot carry Petroleum
+                if (shape.equalsIgnoreCase("Rectangular") &&
+                        cargo.equalsIgnoreCase("Petroleum")) {
+
+                    throw new CargoSafetyException("Unsafe cargo assignment!");
+                }
+
+                // ✅ Safe assignment
+                this.cargo = cargo;
+                System.out.println("Cargo assigned successfully -> " + cargo);
+
+            } catch (CargoSafetyException e) {
+                System.out.println("Error: " + e.getMessage());
+
+            } finally {
+                System.out.println("Cargo validation completed for " + shape + " bogie");
+            }
+        }
     }
 
-    // ✅ CORE METHOD (UC10)
-    public static int calculateTotalCapacity(List<Bogie> bogies) {
-
-        if (bogies == null) return 0;
-
-        return bogies.stream()
-                .map(Bogie::getCapacity)   // extract capacity
-                .reduce(0, Integer::sum); // aggregate
-    }
-
-    // ✅ Optional display
-    public static void displayBogies(List<Bogie> bogies) {
-        bogies.forEach(System.out::println);
-    }
-
-    // ✅ Main (demo only)
+    // ✅ Main (demo)
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println("UC10 - Total Seating Capacity باستخدام reduce()");
-        System.out.println("==========================================\n");
+        System.out.println("======================================");
+        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println("======================================");
 
-        List<Bogie> bogies = createBogies();
+        GoodsBogie b1 = new GoodsBogie("Cylindrical");
+        b1.assignCargo("Petroleum"); // ✅ valid
 
-        displayBogies(bogies);
+        System.out.println();
 
-        int total = calculateTotalCapacity(bogies);
+        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        b2.assignCargo("Petroleum"); // ❌ invalid
 
-        System.out.println("\nTotal Seating Capacity: " + total);
+        System.out.println("\nUC15 runtime handling completed...");
     }
 }

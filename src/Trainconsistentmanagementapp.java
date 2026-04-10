@@ -24,7 +24,7 @@ class Bogie {
     }
 }
 
-public class TrainConsistManagementApp {
+public class Trainconsistentmanagementapp {
 
     // Loop-based filtering
     public static List<Bogie> filterWithLoop(List<Bogie> bogies) {

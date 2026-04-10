@@ -1,53 +1,41 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-class Bogie {
-    private String type;
-    private int capacity;
+public class TrainConsistManagementApp {
 
-    public Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
+    // ✅ Regex Patterns
+    private static final String TRAIN_ID_REGEX = "TRN-\\d{4}";
+    private static final String CARGO_CODE_REGEX = "PET-[A-Z]{2}";
+
+    private static final Pattern trainPattern = Pattern.compile(TRAIN_ID_REGEX);
+    private static final Pattern cargoPattern = Pattern.compile(CARGO_CODE_REGEX);
+
+    // ✅ Validate Train ID
+    public static boolean isValidTrainID(String trainId) {
+        if (trainId == null || trainId.isEmpty()) return false;
+
+        Matcher matcher = trainPattern.matcher(trainId);
+        return matcher.matches(); // exact match
     }
 
-    public String getType() {
-        return type;
+    // ✅ Validate Cargo Code
+    public static boolean isValidCargoCode(String cargoCode) {
+        if (cargoCode == null || cargoCode.isEmpty()) return false;
+
+        Matcher matcher = cargoPattern.matcher(cargoCode);
+        return matcher.matches(); // exact match
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    @Override
-    public String toString() {
-        return type + "(" + capacity + ")";
-    }
-}
-
-public class Trainconsistentmanagementapp {
-
-    // 🔹 UC9 Grouping Method (IMPORTANT FOR TESTING)
-    public static Map<String, List<Bogie>> groupBogies(List<Bogie> bogies) {
-        return bogies.stream()
-                .collect(Collectors.groupingBy(Bogie::getType));
-    }
-
+    // ✅ Main (demo only)
     public static void main(String[] args) {
 
-        System.out.println("=== UC9: Group Bogies ===");
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 50));
-        bogies.add(new Bogie("Sleeper", 65));
-        bogies.add(new Bogie("First Class", 30));
-        bogies.add(new Bogie("AC Chair", 80));
+        System.out.println("Train ID: " + trainId +
+                " → " + (isValidTrainID(trainId) ? "Valid" : "Invalid"));
 
-        Map<String, List<Bogie>> grouped = groupBogies(bogies);
-
-        // 🔹 Print grouped data
-        for (String type : grouped.keySet()) {
-            System.out.println(type + " -> " + grouped.get(type));
-        }
+        System.out.println("Cargo Code: " + cargoCode +
+                " → " + (isValidCargoCode(cargoCode) ? "Valid" : "Invalid"));
     }
 }

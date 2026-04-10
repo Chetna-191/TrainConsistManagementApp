@@ -1,50 +1,35 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
-class TrainConsistManagementAppTest {
+public class TrainConsistManagementApp {
 
-    @Test
-    void testSort_BasicSorting() {
-        int[] arr = {72, 56, 24, 70, 60};
-
-        TrainConsistManagementApp.bubbleSort(arr);
-
-        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
+    // Method to sort bogie names
+    public static String[] sortBogieNames(String[] bogies) {
+        Arrays.sort(bogies); // Built-in optimized sort
+        return bogies;
     }
 
-    @Test
-    void testSort_AlreadySortedArray() {
-        int[] arr = {24, 56, 60, 70, 72};
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        TrainConsistManagementApp.bubbleSort(arr);
+        System.out.println("Enter number of bogies:");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
-    }
+        String[] bogies = new String[n];
 
-    @Test
-    void testSort_DuplicateValues() {
-        int[] arr = {72, 56, 56, 24};
+        System.out.println("Enter bogie names:");
+        for (int i = 0; i < n; i++) {
+            bogies[i] = scanner.nextLine();
+        }
 
-        TrainConsistManagementApp.bubbleSort(arr);
+        // Sort bogies
+        sortBogieNames(bogies);
 
-        assertArrayEquals(new int[]{24, 56, 56, 72}, arr);
-    }
+        // Display sorted result
+        System.out.println("Sorted Bogie Names:");
+        System.out.println(Arrays.toString(bogies));
 
-    @Test
-    void testSort_SingleElementArray() {
-        int[] arr = {50};
-
-        TrainConsistManagementApp.bubbleSort(arr);
-
-        assertArrayEquals(new int[]{50}, arr);
-    }
-
-    @Test
-    void testSort_AllEqualValues() {
-        int[] arr = {40, 40, 40};
-
-        TrainConsistManagementApp.bubbleSort(arr);
-
-        assertArrayEquals(new int[]{40, 40, 40}, arr);
+        scanner.close();
     }
 }

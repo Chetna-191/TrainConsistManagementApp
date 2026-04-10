@@ -1,50 +1,56 @@
-public class TrainConsistManagementApp {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 
-    // ✅ Bubble Sort Method
-    static void bubbleSort(int[] arr) {
+public class TrainConsistManagementAppTest {
 
-        int n = arr.length;
+    @Test
+    void testSort_BasicAlphabeticalSorting() {
+        String[] input = {"Sleeper","AC Chair","First Class","General","Luxury"};
+        String[] expected = {"AC Chair","First Class","General","Luxury","Sleeper"};
 
-        // Outer loop → number of passes
-        for (int i = 0; i < n - 1; i++) {
+        String[] result = TrainConsistManagementApp.sortBogieNames(input);
 
-            // Inner loop → compare adjacent elements
-            for (int j = 0; j < n - i - 1; j++) {
-
-                // Swap if left > right
-                if (arr[j] > arr[j + 1]) {
-
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
-            }
-        }
+        assertArrayEquals(expected, result);
     }
 
-    // ✅ Utility to print array
-    static void printArray(int[] arr) {
-        for (int val : arr) {
-            System.out.print(val + " ");
-        }
-        System.out.println();
+    @Test
+    void testSort_UnsortedInput() {
+        String[] input = {"Luxury","General","Sleeper","AC Chair"};
+        String[] expected = {"AC Chair","General","Luxury","Sleeper"};
+
+        String[] result = TrainConsistManagementApp.sortBogieNames(input);
+
+        assertArrayEquals(expected, result);
     }
 
-    // ✅ Main method (demo)
-    public static void main(String[] args) {
+    @Test
+    void testSort_AlreadySortedArray() {
+        String[] input = {"AC Chair","First Class","General"};
+        String[] expected = {"AC Chair","First Class","General"};
 
-        System.out.println("======================================");
-        System.out.println("UC16 - Bubble Sort (Passenger Capacity)");
-        System.out.println("======================================");
+        String[] result = TrainConsistManagementApp.sortBogieNames(input);
 
-        int[] capacities = {72, 56, 24, 70, 60};
+        assertArrayEquals(expected, result);
+    }
 
-        System.out.print("Before Sorting: ");
-        printArray(capacities);
+    @Test
+    void testSort_DuplicateBogieNames() {
+        String[] input = {"Sleeper","AC Chair","Sleeper","General"};
+        String[] expected = {"AC Chair","General","Sleeper","Sleeper"};
 
-        bubbleSort(capacities);
+        String[] result = TrainConsistManagementApp.sortBogieNames(input);
 
-        System.out.print("After Sorting: ");
-        printArray(capacities);
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    void testSort_SingleElementArray() {
+        String[] input = {"Sleeper"};
+        String[] expected = {"Sleeper"};
+
+        String[] result = TrainConsistManagementApp.sortBogieNames(input);
+
+        assertArrayEquals(expected, result);
     }
 }

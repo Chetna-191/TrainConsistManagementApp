@@ -1,50 +1,50 @@
-public class TrainConsistManagementApp {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-    // ✅ Bubble Sort Method
-    static void bubbleSort(int[] arr) {
+class TrainConsistManagementAppTest {
 
-        int n = arr.length;
+    @Test
+    void testSort_BasicSorting() {
+        int[] arr = {72, 56, 24, 70, 60};
 
-        // Outer loop → number of passes
-        for (int i = 0; i < n - 1; i++) {
+        TrainConsistManagementApp.bubbleSort(arr);
 
-            // Inner loop → compare adjacent elements
-            for (int j = 0; j < n - i - 1; j++) {
-
-                // Swap if left > right
-                if (arr[j] > arr[j + 1]) {
-
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
-            }
-        }
+        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
     }
 
-    // ✅ Utility to print array
-    static void printArray(int[] arr) {
-        for (int val : arr) {
-            System.out.print(val + " ");
-        }
-        System.out.println();
+    @Test
+    void testSort_AlreadySortedArray() {
+        int[] arr = {24, 56, 60, 70, 72};
+
+        TrainConsistManagementApp.bubbleSort(arr);
+
+        assertArrayEquals(new int[]{24, 56, 60, 70, 72}, arr);
     }
 
-    // ✅ Main method (demo)
-    public static void main(String[] args) {
+    @Test
+    void testSort_DuplicateValues() {
+        int[] arr = {72, 56, 56, 24};
 
-        System.out.println("======================================");
-        System.out.println("UC16 - Bubble Sort (Passenger Capacity)");
-        System.out.println("======================================");
+        TrainConsistManagementApp.bubbleSort(arr);
 
-        int[] capacities = {72, 56, 24, 70, 60};
+        assertArrayEquals(new int[]{24, 56, 56, 72}, arr);
+    }
 
-        System.out.print("Before Sorting: ");
-        printArray(capacities);
+    @Test
+    void testSort_SingleElementArray() {
+        int[] arr = {50};
 
-        bubbleSort(capacities);
+        TrainConsistManagementApp.bubbleSort(arr);
 
-        System.out.print("After Sorting: ");
-        printArray(capacities);
+        assertArrayEquals(new int[]{50}, arr);
+    }
+
+    @Test
+    void testSort_AllEqualValues() {
+        int[] arr = {40, 40, 40};
+
+        TrainConsistManagementApp.bubbleSort(arr);
+
+        assertArrayEquals(new int[]{40, 40, 40}, arr);
     }
 }
